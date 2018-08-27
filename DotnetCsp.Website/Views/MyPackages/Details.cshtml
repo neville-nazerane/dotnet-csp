@@ -1,0 +1,79 @@
+﻿@model DotnetCsp.Core.Package
+
+@{
+    ViewData["Title"] = "Detail";
+
+    var routeData = new Dictionary<string, string> {
+        { "id", Model.Id.ToString() }
+    };
+
+}
+
+<h2>Detail</h2>
+
+<div>
+    <h4>Package</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedById)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedById)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedOn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedOn)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedById)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedById)
+        </dd>
+    </dl>
+</div>
+
+<div>
+
+    <h3>Client side packages</h3>
+    @foreach (var c in Model.ClientPackages)
+    {
+        <div>@c.Source</div>
+    }
+    <a asp-action="AddClient" asp-all-route-data="routeData">Add</a>
+
+    <h3>Server side packages</h3>
+    @foreach (var r in Model.ServerPackages)
+    {
+        <div>@r.PackageName</div>
+    }
+    <a asp-action="AddServer" asp-all-route-data="routeData">Add</a>
+
+
+</div>
+
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

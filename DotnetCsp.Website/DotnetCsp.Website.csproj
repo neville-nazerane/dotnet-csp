@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>dotnet csp</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="NetCore.ModelValidation" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotnetCsp.Core\DotnetCsp.Core.csproj" />
+    <ProjectReference Include="..\DotnetCsp.Model\DotnetCsp.Models.csproj" />
+    <ProjectReference Include="..\DotnetCsp.Web.Injections\DotnetCsp.Web.Injections.csproj" />
+    <ProjectReference Include="..\DotnetCsp.Web.Services\DotnetCsp.Web.Services.csproj" />
+  </ItemGroup>
+
+</Project>
