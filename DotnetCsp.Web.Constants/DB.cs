@@ -8,6 +8,7 @@ namespace DotnetCsp.Web.Constants
     {
 
         public const string SqlServerConnection = "sqlDb";
+        //public const string SqlServerConnection = "onlineSqlDb";
 
     }
 }

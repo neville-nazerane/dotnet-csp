@@ -7,7 +7,8 @@ namespace DotnetCsp.App.Connections
     static class Urls
     {
 
-        internal const string Main = "http://localhost:64272";
+        internal const string Main = "http://cspapp.nevillenazerane.com";
+        //internal const string Main = "http://localhost:64272";
 
     }
 }

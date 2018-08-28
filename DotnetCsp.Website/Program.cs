@@ -19,6 +19,12 @@ namespace DotnetCsp.Website
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+               .UseConfiguration(
+                    new ConfigurationBuilder()
+                        .AddJsonFile(
+                                Path.Combine(Directory.GetCurrentDirectory(), @"..\secrets\csp.json"), true)
+                        .Build()
+                )
                 .UseStartup<Startup>();
     }
 }
