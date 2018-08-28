@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotnetCsp.Web.Migrations.Migrations
 {
     [DbContext(typeof(MigrationDbContext))]
-    [Migration("20180823191426_ProjectUpdateNull")]
-    partial class ProjectUpdateNull
+    [Migration("20180827151650_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,8 +44,7 @@ namespace DotnetCsp.Web.Migrations.Migrations
 
                     b.Property<int?>("UpdatedById");
 
-                    b.Property<DateTime?>("UpdatedOn")
-                        .IsRequired();
+                    b.Property<DateTime?>("UpdatedOn");
 
                     b.HasKey("Id");
 
@@ -107,8 +106,7 @@ namespace DotnetCsp.Web.Migrations.Migrations
 
                     b.Property<int?>("UpdatedById");
 
-                    b.Property<DateTime?>("UpdatedOn")
-                        .IsRequired();
+                    b.Property<DateTime?>("UpdatedOn");
 
                     b.HasKey("Id");
 
@@ -171,6 +169,26 @@ namespace DotnetCsp.Web.Migrations.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("DotnetCsp.Core.UserDisplay", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<int?>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserDisplays");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
@@ -283,7 +301,7 @@ namespace DotnetCsp.Web.Migrations.Migrations
 
             modelBuilder.Entity("DotnetCsp.Core.ClientPackage", b =>
                 {
-                    b.HasOne("DotnetCsp.Core.User", "CreatedBy")
+                    b.HasOne("DotnetCsp.Core.UserDisplay", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -293,26 +311,26 @@ namespace DotnetCsp.Web.Migrations.Migrations
                         .HasForeignKey("PackageId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("DotnetCsp.Core.User", "UpdatedBy")
+                    b.HasOne("DotnetCsp.Core.UserDisplay", "UpdatedBy")
                         .WithMany()
                         .HasForeignKey("UpdatedById");
                 });
 
             modelBuilder.Entity("DotnetCsp.Core.Package", b =>
                 {
-                    b.HasOne("DotnetCsp.Core.User", "CreatedBy")
+                    b.HasOne("DotnetCsp.Core.UserDisplay", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("DotnetCsp.Core.User", "UpdatedBy")
+                    b.HasOne("DotnetCsp.Core.UserDisplay", "UpdatedBy")
                         .WithMany()
                         .HasForeignKey("UpdatedById");
                 });
 
             modelBuilder.Entity("DotnetCsp.Core.ServerPackage", b =>
                 {
-                    b.HasOne("DotnetCsp.Core.User", "CreatedBy")
+                    b.HasOne("DotnetCsp.Core.UserDisplay", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -322,9 +340,17 @@ namespace DotnetCsp.Web.Migrations.Migrations
                         .HasForeignKey("PackageId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("DotnetCsp.Core.User", "UpdatedBy")
+                    b.HasOne("DotnetCsp.Core.UserDisplay", "UpdatedBy")
                         .WithMany()
                         .HasForeignKey("UpdatedById");
+                });
+
+            modelBuilder.Entity("DotnetCsp.Core.UserDisplay", b =>
+                {
+                    b.HasOne("DotnetCsp.Core.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

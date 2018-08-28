@@ -17,6 +17,7 @@ namespace DotnetCsp.Web.Data
 
         public DbSet<ServerPackage> ServerPackages { get; set; }
 
+        public DbSet<UserDisplay> UserDisplays { get; set; }
         public DbSet<User> AppUsers { get; set; }
 
         public AbstractDbContext(DbContextOptions options) : base(options)

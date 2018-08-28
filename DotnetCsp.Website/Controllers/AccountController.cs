@@ -1,4 +1,5 @@
 ﻿using DotnetCsp.Core;
+using DotnetCsp.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,12 @@ namespace DotnetCsp.Website.Controllers
     public class AccountController : Controller
     {
         private readonly SignInManager<User> signInManager;
+        private readonly IDisplayUserRepository displayUserRepository;
 
-        public AccountController(SignInManager<User> signInManager)
+        public AccountController(SignInManager<User> signInManager, IDisplayUserRepository displayUserRepository)
         {
             this.signInManager = signInManager;
+            this.displayUserRepository = displayUserRepository;
         }
 
         public IEnumerable<User> All() => signInManager.UserManager.Users;
@@ -65,7 +68,7 @@ namespace DotnetCsp.Website.Controllers
                                                 signUp.Password);
                 if (res.Succeeded)
                 {
-
+                    displayUserRepository.Add(signUp.UserName);
                     return Redirect("~/");
                 }
                 else

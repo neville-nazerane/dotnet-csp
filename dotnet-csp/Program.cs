@@ -18,7 +18,7 @@ namespace dotnet_csp
             var consoleControl = new ConsoleControl();
 
             // temp test --
-            //await control.InstallAsync("signalr");
+            //await control.InstallAsync("netcore.angular");
             // ---
 
             ConsoleOption packageName;

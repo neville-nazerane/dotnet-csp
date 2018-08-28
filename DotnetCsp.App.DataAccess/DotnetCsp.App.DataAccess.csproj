@@ -13,7 +13,6 @@
     <ProjectReference Include="..\DotnetCsp.App.Connections\DotnetCsp.App.Connections.csproj" />
     <ProjectReference Include="..\DotnetCsp.Core\DotnetCsp.Core.csproj" />
     <ProjectReference Include="..\DotnetCsp.Model\DotnetCsp.Models.csproj" />
-    <ProjectReference Include="..\DotnetCsp.Web.DataAccess\DotnetCsp.Web.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

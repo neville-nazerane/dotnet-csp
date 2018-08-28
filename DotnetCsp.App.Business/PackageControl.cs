@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using NetCore.Apis.Consumer;
+using System.Net.Http;
 
 namespace DotnetCsp.App.Business
 {
@@ -28,7 +30,8 @@ namespace DotnetCsp.App.Business
             if (res.IsSuccessful) Install(res);
         }
 
-        public void Install(Package package) {
+        public void Install(Package package)
+        {
             foreach (var p in package.ServerPackages)
                 InstallServerPackage(p);
             foreach (var p in package.ClientPackages)
@@ -44,30 +47,6 @@ namespace DotnetCsp.App.Business
 
         public void InstallClientPackage(ClientPackage package)
         {
-            //if (package.OnlyFiles?.Length > 0)
-            //{
-            //    LocateDirectory dirs = new LocateDirectory(), targetDir, found;
-
-            //    foreach (string file in package.OnlyFiles.Replace(", ", ",").Split(','))
-            //    {
-            //        var parts = file.Split('/', '\\');
-            //        targetDir = dirs;
-
-            //        for (int i = 0; i < parts.Length - 1; i++)
-            //        {
-            //            string part = parts[i];
-            //            found = targetDir.directories.SingleOrDefault(d => d.Name == part);
-            //            if (found == null)
-            //            {
-            //                found = new LocateDirectory(part);
-            //                targetDir.directories.Add(found);
-            //            }
-            //            targetDir = found;
-            //        }
-            //        targetDir.files.Add(parts[parts.Length - 1]);
-            //    }
-
-            //}
 
             string folder = "wwwroot/lib/" + package.Package.Name;
 
@@ -85,12 +64,19 @@ namespace DotnetCsp.App.Business
             {
                 using (var client = new WebClient())
                 {
+                    string baseAddr = package.Source;
+                    if (baseAddr.EndsWith(".git"))
+                        baseAddr = baseAddr.Substring(0, baseAddr.Length - 4);
+                    baseAddr = baseAddr
+                                    .Replace("https://github.com", "https://raw.githubusercontent.com");
+                    if (!baseAddr.EndsWith("/")) baseAddr += "/";
+                        client.BaseAddress = baseAddr;
+
                     foreach (var file in package.OnlyFiles.Replace(", ", ",").Split(','))
                     {
-                        string gitStart = package.Source.Substring(0, package.Source.Length - 4);
-                        string location = $"{folder}/{file}";
+                        string location =  $"{folder}/{file}";
                         Directory.CreateDirectory(Path.GetDirectoryName(location));
-                        client.DownloadFile($"{gitStart}/blob/master/{file}", location);
+                        client.DownloadFile($"master/{file}", location);
                     }
                 }
             }   

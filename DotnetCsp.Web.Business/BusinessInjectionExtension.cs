@@ -11,7 +11,8 @@ namespace DotnetCsp.Web.Business
     {
 
         public static IServiceCollection AddBusiness(this IServiceCollection services)
-            => services.AddScoped<IPackageRepository, PackageRepository>();
+            => services.AddScoped<IPackageRepository, PackageRepository>()
+                        .AddScoped<IDisplayUserRepository, DisplayUserRepository>();
 
 
         public delegate void ConfigureDb<TContext>() 

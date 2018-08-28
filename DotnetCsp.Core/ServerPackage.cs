@@ -22,13 +22,13 @@ namespace DotnetCsp.Core
 
         [Required, ForeignKey(nameof(CreatedBy))]
         public int? CreatedById { get; set; }
-        public User CreatedBy { get; set; }
+        public UserDisplay CreatedBy { get; set; }
 
         public DateTime? UpdatedOn { get; set; }
 
         [ForeignKey(nameof(UpdatedBy))]
         public int? UpdatedById { get; set; }
-        public User UpdatedBy { get; set; }
+        public UserDisplay UpdatedBy { get; set; }
 
     }
 }

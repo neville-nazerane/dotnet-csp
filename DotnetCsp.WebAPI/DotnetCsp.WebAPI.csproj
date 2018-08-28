@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="NetCore.Apis.Consumer" Version="1.0.6" />
     <PackageReference Include="NetCore.ModelValidation" Version="1.0.0" />
   </ItemGroup>
 

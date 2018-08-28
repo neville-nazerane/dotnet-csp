@@ -156,6 +156,26 @@ namespace DotnetCsp.Web.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserDisplays",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<int>(nullable: false),
+                    DisplayName = table.Column<string>(maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserDisplays", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserDisplays_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Packages",
                 columns: table => new
                 {
@@ -164,22 +184,22 @@ namespace DotnetCsp.Web.Migrations.Migrations
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     CreatedById = table.Column<int>(nullable: false),
-                    UpdatedOn = table.Column<DateTime>(nullable: false),
+                    UpdatedOn = table.Column<DateTime>(nullable: true),
                     UpdatedById = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Packages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Packages_AspNetUsers_CreatedById",
+                        name: "FK_Packages_UserDisplays_CreatedById",
                         column: x => x.CreatedById,
-                        principalTable: "AspNetUsers",
+                        principalTable: "UserDisplays",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Packages_AspNetUsers_UpdatedById",
+                        name: "FK_Packages_UserDisplays_UpdatedById",
                         column: x => x.UpdatedById,
-                        principalTable: "AspNetUsers",
+                        principalTable: "UserDisplays",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -195,16 +215,16 @@ namespace DotnetCsp.Web.Migrations.Migrations
                     PackageId = table.Column<int>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     CreatedById = table.Column<int>(nullable: false),
-                    UpdatedOn = table.Column<DateTime>(nullable: false),
+                    UpdatedOn = table.Column<DateTime>(nullable: true),
                     UpdatedById = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ClientPackages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ClientPackages_AspNetUsers_CreatedById",
+                        name: "FK_ClientPackages_UserDisplays_CreatedById",
                         column: x => x.CreatedById,
-                        principalTable: "AspNetUsers",
+                        principalTable: "UserDisplays",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -214,9 +234,9 @@ namespace DotnetCsp.Web.Migrations.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_ClientPackages_AspNetUsers_UpdatedById",
+                        name: "FK_ClientPackages_UserDisplays_UpdatedById",
                         column: x => x.UpdatedById,
-                        principalTable: "AspNetUsers",
+                        principalTable: "UserDisplays",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -231,16 +251,16 @@ namespace DotnetCsp.Web.Migrations.Migrations
                     PackageId = table.Column<int>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     CreatedById = table.Column<int>(nullable: false),
-                    UpdatedOn = table.Column<DateTime>(nullable: false),
+                    UpdatedOn = table.Column<DateTime>(nullable: true),
                     UpdatedById = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ServerPackages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ServerPackages_AspNetUsers_CreatedById",
+                        name: "FK_ServerPackages_UserDisplays_CreatedById",
                         column: x => x.CreatedById,
-                        principalTable: "AspNetUsers",
+                        principalTable: "UserDisplays",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -250,9 +270,9 @@ namespace DotnetCsp.Web.Migrations.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_ServerPackages_AspNetUsers_UpdatedById",
+                        name: "FK_ServerPackages_UserDisplays_UpdatedById",
                         column: x => x.UpdatedById,
-                        principalTable: "AspNetUsers",
+                        principalTable: "UserDisplays",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -335,6 +355,11 @@ namespace DotnetCsp.Web.Migrations.Migrations
                 name: "IX_ServerPackages_UpdatedById",
                 table: "ServerPackages",
                 column: "UpdatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserDisplays_UserId",
+                table: "UserDisplays",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -365,6 +390,9 @@ namespace DotnetCsp.Web.Migrations.Migrations
 
             migrationBuilder.DropTable(
                 name: "Packages");
+
+            migrationBuilder.DropTable(
+                name: "UserDisplays");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
