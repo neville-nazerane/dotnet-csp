@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 
 namespace DotnetCsp.WebAPI
 {
-
     
     public class Program
     {
@@ -20,12 +19,10 @@ namespace DotnetCsp.WebAPI
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseConfiguration (
-                    new ConfigurationBuilder()
-                        .AddJsonFile(
-                                Path.Combine(Directory.GetCurrentDirectory(), @"..\secrets\csp.json"), true)
-                        .Build()
-                )
+                .UseUrlIfExists()
+                .UseKeyVaultConfiguration(
+                        Environment.GetEnvironmentVariable("KEYVAULT_ENDPOINT"),
+                                "csp", true)
                 .UseStartup<Startup>();
     }
 }

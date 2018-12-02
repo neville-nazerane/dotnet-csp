@@ -57,6 +57,7 @@ namespace DotnetCsp.Website.Controllers
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUp signUp)
         {
+            
             if (ModelState.IsValid)
             {
                 var res = await signInManager.UserManager.CreateAsync(

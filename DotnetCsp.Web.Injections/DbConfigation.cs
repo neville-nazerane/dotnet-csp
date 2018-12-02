@@ -27,7 +27,6 @@ namespace DotnetCsp.Web.Injections
 
             services.AddIdentity<User, IdentityRole<int>>()
                     .AddEntityFrameworkStores<TContext>();
-            
 
         }
     }
